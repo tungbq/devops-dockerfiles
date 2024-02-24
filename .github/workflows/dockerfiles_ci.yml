@@ -31,6 +31,8 @@ jobs:
             echo "$file was changed"
           done
       - name: Build Docker image
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
         run: |
           # Build all Dockerfile directories if workflow file is changed
           for path in ${ALL_CHANGED_FILES}; do
