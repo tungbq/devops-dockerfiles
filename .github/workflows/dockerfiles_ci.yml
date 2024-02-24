@@ -32,9 +32,6 @@ jobs:
           done
       - name: Build Docker image
         run: |
-          # Split the changed paths into an array
-          IFS=$'\n' read -r -a paths_array <<< "${{ steps.changed-paths.outputs.changed-paths }}"
-
           # Build all Dockerfile directories if workflow file is changed
           for path in ${ALL_CHANGED_FILES}; do
             if [[ $path == '.github/workflows/dockerfiles_ci.yml' ]]; then
