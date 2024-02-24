@@ -16,21 +16,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Determine changed paths
-        id: changed-paths
-        run: |
-          # Get the list of changed paths
-          changed_paths=$(git diff --name-only | grep -E '^dockerfiles/|\.github/workflows/dockerfiles_ci\.yml$' || true)
-          echo "Changed paths: $changed_paths"
-          echo "::set-output name=changed-paths::$changed_paths"
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v42
+        # To compare changes between the current commit and the last pushed remote commit set `since_last_remote_commit: true`. e.g
+        # with:
+        #   since_last_remote_commit: true 
 
+      - name: List all changed files
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+        run: |
+          for file in ${ALL_CHANGED_FILES}; do
+            echo "$file was changed"
+          done
       - name: Build Docker image
         run: |
           # Split the changed paths into an array
           IFS=$'\n' read -r -a paths_array <<< "${{ steps.changed-paths.outputs.changed-paths }}"
 
           # Build all Dockerfile directories if workflow file is changed
-          for path in "${paths_array[@]}"; do
+          for path in ${ALL_CHANGED_FILES}; do
             if [[ $path == '.github/workflows/dockerfiles_ci.yml' ]]; then
               for folder in dockerfiles/*; do
                 if [ -d "$folder" ]; then
@@ -44,7 +50,7 @@ jobs:
           done
 
           # Build only changed Dockerfile directories
-          for folder in "${paths_array[@]}"; do
+          for folder in ${ALL_CHANGED_FILES}; do
             if [ -d "$folder" ]; then
               echo "Building $folder ..."
               folder_name=$(basename "$folder")
