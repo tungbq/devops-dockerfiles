@@ -20,7 +20,7 @@ jobs:
         id: changed-paths
         run: |
           # Get the list of changed paths
-          changed_paths=$(git diff --name-only main ${{ github.sha }} | grep -E '^dockerfiles/|\.github/workflows/dockerfiles_ci\.yml$' || true)
+          changed_paths=$(git diff --name-only | grep -E '^dockerfiles/|\.github/workflows/dockerfiles_ci\.yml$' || true)
           echo "Changed paths: $changed_paths"
           echo "::set-output name=changed-paths::$changed_paths"
 
