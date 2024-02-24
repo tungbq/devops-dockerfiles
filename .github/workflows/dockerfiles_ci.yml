@@ -21,38 +21,29 @@ jobs:
         uses: tj-actions/changed-files@v42
         # To compare changes between the current commit and the last pushed remote commit set `since_last_remote_commit: true`. e.g
         # with:
-        #   since_last_remote_commit: true 
+        #   since_last_remote_commit: true
 
-      - name: List all changed files
-        env:
-          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
-        run: |
-          for file in ${ALL_CHANGED_FILES}; do
-            echo "$file was changed"
-          done
       - name: Build Docker image
         env:
           ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
         run: |
-          # Build all Dockerfile directories if workflow file is changed
-          for path in ${ALL_CHANGED_FILES}; do
-            if [[ $path == '.github/workflows/dockerfiles_ci.yml' ]]; then
-              for folder in dockerfiles/*; do
-                if [ -d "$folder" ]; then
-                  echo "Building $folder ..."
-                  folder_name=$(basename "$folder")
-                  docker build -t "$folder_name" "$folder"
-                fi
-              done
-              exit 0
-            fi
-          done
-
-          # Build only changed Dockerfile directories
-          for folder in ${ALL_CHANGED_FILES}; do
-            if [ -d "$folder" ]; then
-              echo "Building $folder ..."
-              folder_name=$(basename "$folder")
-              docker build -t "$folder_name" "$folder"
-            fi
-          done
+          # Check if there is a change in the workflow file
+          if [[ $(grep -c '.github/workflows/dockerfiles_ci.yml' <<< "$ALL_CHANGED_FILES") -gt 0 ]]; then
+            # Case 1: Build all Dockerfile directories if workflow file is changed
+            for folder in dockerfiles/*; do
+              if [ -d "$folder" ]; then
+                echo "Building $folder ..."
+                folder_name=$(basename "$folder")
+                docker build -t "$folder_name" "$folder"
+              fi
+            done
+          else
+            # Case 2: Build only changed Dockerfile directories
+            for folder in ${ALL_CHANGED_FILES}; do
+              if [ -d "$folder" ]; then
+                echo "Building $folder ..."
+                folder_name=$(basename "$folder")
+                docker build -t "$folder_name" "$folder"
+              fi
+            done
+          fi
