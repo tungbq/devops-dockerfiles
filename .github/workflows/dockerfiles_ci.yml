@@ -1,0 +1,32 @@
+name: Dockerfile CI
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'dockerfiles/**'
+      - '.github/workflows/dockerfiles_ci.yml'
+
+jobs:
+  dockerfile-ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          # cd dockerfiles
+
+          # Loop through each folderectory in the specified directory
+          for folder in dockerfiles/*; do
+              if [ -d "$folder" ]; then
+                  # Extract the last part of the path (folder name)
+                  folder_name=$(basename "$folder")
+
+                  # Build the Docker image with the tag as the folder name
+                  docker build -t "$folder_name" "$folder"                  
+              fi
+          done
