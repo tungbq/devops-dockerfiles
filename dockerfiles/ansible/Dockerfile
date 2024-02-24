@@ -5,8 +5,6 @@ FROM ${BASE_IMAGE}
 ARG PYTHON_VERSION=3.11
 ARG ANSIBLE_VERSION=2.15.8
 ARG ANSIBLE_LINT=6.22.1
-ARG MOLECULE_VERSION=6.0.3
-ARG MOLECULE_PLUGIN_VERSION=23.5.0
 
 # Install system dependencies
 RUN apt-get update && \
@@ -28,8 +26,7 @@ RUN pip3 install \
     ansible-lint==${ANSIBLE_LINT}
 
 # Install needed Ansible roles and collections
-COPY requirements.yml /requirements.yml
-RUN ansible-galaxy install -r /requirements.yml --ignore-certs
+RUN ansible-galaxy install -r /requirements/requirements.yml --ignore-certs
 
 # Display installed Ansible roles and collections
 RUN echo "Installed Ansible Collections: $(ansible-galaxy collection list)"
