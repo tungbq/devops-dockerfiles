@@ -16,16 +16,36 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build Docker image
-        run: |
-          # Loop through each folderectory in the specified directory
-          for folder in dockerfiles/*; do
-            if [ -d "$folder" ]; then
-              echo "Building $folder ..."
-              # Extract the last part of the path (folder name)
-              folder_name=$(basename "$folder")
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v42
+        # To compare changes between the current commit and the last pushed remote commit set `since_last_remote_commit: true`. e.g
+        # with:
+        #   since_last_remote_commit: true
 
-              # Build the Docker image with the tag as the folder name
-              docker build -t "$folder_name" "$folder"                  
-            fi
-          done
+      - name: Build Docker image
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+        run: |
+          # Check if there is a change in the workflow file
+          if [[ $(grep -c '.github/workflows/dockerfiles_ci.yml' <<< "$ALL_CHANGED_FILES") -gt 0 ]]; then
+            # Case 1: Build all Dockerfile directories if workflow file is changed
+            echo "Workflow change detected. Building all the dockerfiles..."
+            for folder in dockerfiles/*; do
+              if [ -d "$folder" ]; then
+                echo "Building $folder ..."
+                folder_name=$(basename "$folder")
+                docker build -t "$folder_name" "$folder"
+              fi
+            done
+          else
+            # Case 2: Build only changed Dockerfile directories
+            echo "Dockerfile directories change detected. Building only related dockerfiles..."
+            for folder in ${ALL_CHANGED_FILES}; do
+              if [ -d "$folder" ]; then
+                echo "Building $folder ..."
+                folder_name=$(basename "$folder")
+                docker build -t "$folder_name" "$folder"
+              fi
+            done
+          fi
