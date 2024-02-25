@@ -43,13 +43,14 @@ jobs:
             echo "Dockerfile directories change detected. Building only related dockerfiles..."
             for folder in $ALL_CHANGED_FILES; do
               if [ -d "$folder" ]; then
+                echo "Building $folder ..."
+                folder_name=$(basename "$folder")
 
                 # Check if the directory has already been built
                 if [[ " ${already_built[@]} " =~ " $folder_name " ]]; then
                   echo "Skipping $folder_name. Already built."
                 else
-                  echo "Building $folder ..."
-                  folder_name=$(basename "$folder")
+
                   docker build -t "$folder_name" "$folder"
 
                   # Add the directory to the already built list
