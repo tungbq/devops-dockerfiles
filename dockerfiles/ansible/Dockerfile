@@ -28,6 +28,3 @@ RUN pip3 install \
 # Install needed Ansible roles and collections
 RUN ansible-galaxy install -r /requirements/requirements.yml --ignore-certs
 
-# Check installed Ansible roles and versions
-RUN echo "Installed Ansible Roles: $(ansible-galaxy role list)"
-RUN echo "Installed Ansible Version: $(ansible --version)"
