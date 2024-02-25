@@ -1,6 +1,7 @@
 <h1 align="center">DevOps Dockerfiles</h1>
 
 <p align="center">Dockerfiles collection for DevOps tools 💝</p>
+<p align="center">Are you facing challenges while working with a variety of DevOps tools on your machine? This repository offers a Dockerfile and a comprehensive guide to help you build your own ready to use Docker image, equipped with tools such as Ansible, Terraform, and more.</p>
 
 <p align="center">
   <a href="https://github.com/tungbq/devops-dockerfiles/releases"><img alt="devops-dockerfiles release" src="https://img.shields.io/github/release/tungbq/devops-dockerfiles.svg" /><a>
