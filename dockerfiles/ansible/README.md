@@ -1,6 +1,6 @@
 # Dockerfile to build Ansible image
 
-## Build
+## Build the image
 
 - See [build instruction](../README.md)
 
@@ -17,6 +17,8 @@ root@3fcf66819f9d:/# ansible --version
 
 ```
 docker run --rm \
--v "$(pwd)"/demo:/demo debug_ansible \
- ansible-playbook -v -i /demo/inventory.ini /demo/demo_playbook.yml
+      -v "$(pwd)"/demo:/demo \
+      -v ${HOME}/.ssh:/root/.ssh:ro \
+      debug_ansible \
+      ansible-playbook -v -i /demo/inventory.ini /demo/demo_playbook.yml
 ```
