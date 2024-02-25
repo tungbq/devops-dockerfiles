@@ -3,7 +3,8 @@
 <p align="center">Dockerfiles collection for DevOps tools 💝</p>
 
 <p align="center">
-  <a href="https://github.com/tungbq/devops-dockerfiles/releases"><img alt="devops-dockerfiles release" src="https://img.shields.io/github/release/tungbq/devops-dockerfiles.svg" /></a>
+  <a href="https://github.com/tungbq/devops-dockerfiles/releases"><img alt="devops-dockerfiles release" src="https://img.shields.io/github/release/tungbq/devops-dockerfiles.svg" /><a>
+  <a href="https://img.shields.io/github/last-commit/tungbq/devops-dockerfiles/main"><img alt="last commit" src="https://img.shields.io/github/last-commit/tungbq/devops-dockerfiles/main" /></a>
   <a href="https://github.com/tungbq/devops-dockerfiles/stargazers"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/tungbq/devops-dockerfiles"/></a>
 </p>
 
