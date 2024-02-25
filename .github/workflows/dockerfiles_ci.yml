@@ -41,7 +41,7 @@ jobs:
           else
             # Case 2: Build only changed Dockerfile directories
             echo "Dockerfile directories change detected. Building only related dockerfiles..."
-            for folder in ${ALL_CHANGED_FILES}; do
+            for folder in $ALL_CHANGED_FILES; do
               if [ -d "$folder" ]; then
                 echo "Building $folder ..."
                 folder_name=$(basename "$folder")
