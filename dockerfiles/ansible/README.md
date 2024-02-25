@@ -17,6 +17,6 @@ root@3fcf66819f9d:/# ansible --version
 
 ```
 docker run --rm \
--v "$(pwd)"/demo:/demo debug_ansible
- ansible-playbook -i /demo/inventory.ini /demo/demo_playbook.yml
+-v "$(pwd)"/demo:/demo debug_ansible \
+ ansible-playbook -v -i /demo/inventory.ini /demo/demo_playbook.yml
 ```

@@ -3,4 +3,4 @@
   hosts: my-localhost
   tasks:
     - name: Execute uptime command
-      command: uptime
+      command: cat /etc/os-release
