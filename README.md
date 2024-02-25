@@ -13,9 +13,9 @@
 
 ## We cover many Dockerfiles content under - [dockerfiles](./dockerfiles/) 🔥
 
-| Item    | Content                           |
-| :------ | :-------------------------------- |
-| Ansible | [ansible](./dockerfiles/ansible/) |
+| Item    | Dockerfile                                             | Document                          |
+| :------ | :----------------------------------------------------- | :-------------------------------- |
+| Ansible | [ansible/Dockerfile](./dockerfiles/ansible/Dockerfile) | [ansible](./dockerfiles/ansible/) |
 
 ## Contributing
 
