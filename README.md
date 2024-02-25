@@ -13,6 +13,10 @@
 
 - If you find this repository helpful, kindly consider showing your appreciation by giving it a star ⭐ Thanks! 💖
 
+## Prerequisites
+
+Before you begin, make sure you have [Docker](https://docs.docker.com/engine/install/) installed. It's also beneficial to have a basic understanding of Docker concepts.
+
 ## We cover many Dockerfiles content under - [dockerfiles](./dockerfiles/) 🔥
 
 | Item    | Dockerfile                                             | Document                          |
